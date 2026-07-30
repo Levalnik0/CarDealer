@@ -1,0 +1,162 @@
+﻿<Window x:Class="CarDealer.TradeInWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Trade-In"
+        Height="746" Width="1100"
+        Background="#F5F6F8"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Шапка -->
+        <Grid Background="#1F2937">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="UserNameText"
+                       VerticalAlignment="Center"
+                       Margin="20"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+
+            <Button Content="Выход"
+                    Grid.Column="1"
+                    Margin="15"
+                    Background="#EF4444"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Height="35"
+                    Click="Logout_Click"/>
+        </Grid>
+
+        <!-- Рабочая область -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Заявки на trade-in -->
+            <ListBox x:Name="RequestsList"
+                     Margin="10"
+                     SelectionChanged="RequestsList_SelectionChanged"
+                     Background="Transparent"
+                     BorderThickness="0">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White"
+                                Margin="6"
+                                Padding="10"
+                                CornerRadius="8"
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="1">
+
+                            <StackPanel>
+                                <TextBlock Text="{Binding Cars.Manufacturer}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Cars.Model}"/>
+                                <TextBlock Text="{Binding FullName}"/>
+                                <TextBlock Text="{Binding Phone}" Foreground="Gray"/>
+                            </StackPanel>
+
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
+            <!-- Правая панель -->
+            <Border Grid.Column="1"
+                    Background="White"
+                    Margin="15"
+                    Padding="20"
+                    CornerRadius="10"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1">
+
+                <StackPanel>
+
+                    <!-- Покупаемое авто -->
+                    <TextBlock Text="Покупаемое авто"
+                               FontWeight="Bold"
+                               FontSize="16"/>
+
+                    <TextBlock x:Name="NewCarInfo"
+                               Margin="0,5,0,10"/>
+
+                    <Separator Margin="10"/>
+
+                    <!-- Оценка -->
+                    <TextBlock Text="Оцениваемое авто"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Margin="0,0,0,10"/>
+
+                    <TextBlock Text="Марка" Foreground="Gray"/>
+                    <TextBox x:Name="BrandBox" Height="30" Margin="0,5"/>
+
+                    <TextBlock Text="Модель" Foreground="Gray"/>
+                    <TextBox x:Name="ModelBox" Height="30" Margin="0,5"/>
+
+                    <TextBlock Text="Год" Foreground="Gray"/>
+                    <TextBox x:Name="YearBox" Height="30" Margin="0,5"/>
+
+                    <TextBlock Text="Пробег" Foreground="Gray"/>
+                    <TextBox x:Name="MileageBox" Height="30" Margin="0,5"/>
+
+                    <TextBlock Text="Цвет" Foreground="Gray"/>
+                    <TextBox x:Name="ColorBox" Height="30" Margin="0,5"/>
+
+                    <TextBlock Text="Оценка" Foreground="Gray"/>
+                    <TextBox x:Name="PriceBox"
+                             Height="30"
+                             Margin="0,5"
+                             TextChanged="CalcFinal"/>
+
+                    <Button Content="Добавить фото"
+                            Height="32"
+                            Margin="0,10,0,5"
+                            Background="#2563EB"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Click="AddPhoto_Click"/>
+
+                    <TextBlock x:Name="PhotoText"
+                               Foreground="Gray"
+                               Margin="0,0,0,10"/>
+
+                    <Separator Margin="10"/>
+
+                    <!-- Итог -->
+                    <TextBlock Text="Итоговая цена"
+                               FontWeight="Bold"/>
+
+                    <TextBlock x:Name="FinalPriceText"
+                               FontSize="20"
+                               Foreground="#16A34A"
+                               FontWeight="Bold"
+                               Margin="0,5,0,10"/>
+
+                    <!-- Кнопка -->
+                    <Button Content="Завершить Trade-In"
+                            Height="40"
+                            Background="#2563EB"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Margin="0,10,0,0"
+                            Click="Finish_Click"/>
+
+                </StackPanel>
+
+            </Border>
+
+        </Grid>
+    </Grid>
+</Window>

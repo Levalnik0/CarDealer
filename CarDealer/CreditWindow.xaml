@@ -1,0 +1,160 @@
+﻿<Window x:Class="CarDealer.CreditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Кредитный консультант"
+        Height="740" Width="1050"
+        Background="#F5F6F8"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Шапка -->
+        <Grid Background="#1F2937">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="UserNameText"
+                       VerticalAlignment="Center"
+                       Margin="20"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+
+            <Button Content="Выход"
+                    Grid.Column="1"
+                    Margin="15"
+                    Background="#EF4444"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Height="35"
+                    Click="Logout_Click"/>
+        </Grid>
+
+        <!-- Рабочая область -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Заявки -->
+            <ListBox x:Name="CreditRequestsList"
+                     Margin="10"
+                     SelectionChanged="CreditRequestsList_SelectionChanged"
+                     Background="Transparent"
+                     BorderThickness="0">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White"
+                                Margin="6"
+                                Padding="10"
+                                CornerRadius="8"
+                                BorderBrush="#E5E7EB"
+                                BorderThickness="1">
+
+                            <StackPanel>
+                                <TextBlock Text="{Binding Cars.Manufacturer}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Cars.Model}"/>
+                                <TextBlock Text="{Binding FullName}"/>
+                                <TextBlock Text="{Binding Phone}" Foreground="Gray"/>
+                            </StackPanel>
+
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
+            <!-- Калькулятор -->
+            <Border Grid.Column="1"
+                    Background="White"
+                    Margin="15"
+                    Padding="20"
+                    CornerRadius="10"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1">
+
+                <StackPanel>
+
+                    <TextBlock Text="Кредитный калькулятор"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Margin="0,0,0,15"/>
+
+                    <!-- Данные заявки -->
+                    <TextBlock Text="Клиент" Foreground="Gray"/>
+                    <TextBox x:Name="ClientBox" IsReadOnly="True" Height="30" Margin="0,5"/>
+
+                    <TextBlock Text="Авто" Foreground="Gray"/>
+                    <TextBox x:Name="CarBox" IsReadOnly="True" Height="30" Margin="0,5"/>
+
+                    <TextBlock Text="Цена" Foreground="Gray"/>
+                    <TextBox x:Name="PriceBox" IsReadOnly="True" Height="30" Margin="0,5"/>
+
+                    <!-- Калькулятор -->
+                    <TextBlock Text="Срок (лет)" Foreground="Gray"/>
+                    <ComboBox x:Name="YearsBox"
+                              Height="30"
+                              Margin="0,5"
+                              SelectionChanged="CalcChanged"/>
+
+                    <TextBlock Text="Первоначальный взнос" Foreground="Gray"/>
+                    <TextBox x:Name="InitialBox"
+                             Height="30"
+                             Margin="0,5"
+                             TextChanged="CalcChanged"/>
+
+                    <CheckBox x:Name="InsuranceBox"
+                              Content="Страховка"
+                              Margin="0,10,0,5"
+                              Checked="CalcChanged"
+                              Unchecked="CalcChanged"/>
+
+                    <TextBlock Text="Ставка" Foreground="Gray"/>
+                    <TextBox x:Name="RateBox"
+                             IsReadOnly="True"
+                             Height="30"
+                             Margin="0,5"/>
+
+                    <!-- Результат расчёта -->
+                    <TextBlock Text="Ежемесячный платёж"
+                               FontWeight="Bold"
+                               Margin="0,10,0,0"/>
+
+                    <TextBlock x:Name="PaymentText"
+                               FontSize="18"
+                               Foreground="#16A34A"
+                               FontWeight="Bold"/>
+
+                    <TextBlock Text="Переплата"
+                               FontWeight="Bold"
+                               Margin="0,10,0,0"/>
+
+                    <TextBlock x:Name="OverpayText"
+                               FontSize="16"
+                               Foreground="#EF4444"
+                               FontWeight="Bold"/>
+
+                    <!-- Кнопка -->
+                    <Button Content="Выдать кредит"
+                            Margin="0,20,0,0"
+                            Height="40"
+                            Background="#2563EB"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Click="GiveCredit_Click"/>
+
+                </StackPanel>
+
+            </Border>
+
+        </Grid>
+    </Grid>
+</Window>

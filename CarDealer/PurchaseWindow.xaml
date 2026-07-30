@@ -1,0 +1,71 @@
+﻿<Window x:Class="CarDealer.PurchaseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Оформление покупки"
+        Height="340"
+        Width="320"
+        WindowStartupLocation="CenterScreen"
+        Background="#F5F6F8"
+        ResizeMode="NoResize">
+
+    <Grid>
+
+        <!-- Карточка -->
+        <Border Background="White"
+                CornerRadius="12"
+                Padding="20"
+                Margin="20"
+                BorderBrush="#E5E7EB"
+                BorderThickness="1">
+
+            <StackPanel>
+
+                <!-- Заголовок -->
+                <TextBlock Text="Выберите способ покупки"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Margin="0,0,0,20"
+                           TextAlignment="Center"/>
+
+                <!-- Кредит -->
+                <Button Content="💳 Взять в кредит"
+                        Height="40"
+                        Margin="0,5"
+                        Background="#2563EB"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="Credit_Click"/>
+
+                <!-- Trade-in -->
+                <Button Content="🔄 Trade-in (сдать авто)"
+                        Height="40"
+                        Margin="0,5"
+                        Background="#16A34A"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="TradeIn_Click"/>
+
+                <!-- Покупка -->
+                <Button Content="💰 Купить сразу"
+                        Height="40"
+                        Margin="0,5"
+                        Background="#1F2937"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="BuyNow_Click"/>
+
+                <!-- Отмена -->
+                <Button Content="Отмена"
+                        Height="32"
+                        Margin="0,15,0,0"
+                        Background="#EF4444"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Click="Cancel_Click"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+</Window>

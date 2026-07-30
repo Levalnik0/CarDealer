@@ -1,0 +1,25 @@
+## Visual Studio / MSBuild
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userprefs
+
+## NuGet
+packages/
+*.nupkg
+
+## Сборка и отладка
+*.pdb
+*.exe
+*.dll
+*.cache
+*.log
+
+## Файлы, создаваемые приложением
+*.pdf
+
+## macOS / Windows
+.DS_Store
+Thumbs.db

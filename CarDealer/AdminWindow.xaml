@@ -1,0 +1,422 @@
+﻿<Window x:Class="CarDealer.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:CarDealer"
+        Title="Администратор"
+        Height="700"
+        Width="1100"
+        Background="#F5F6F8">
+
+    <Window.Resources>
+        <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Шапка -->
+        <Grid Background="#1F2937">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="UserNameText"
+                       VerticalAlignment="Center"
+                       Margin="20"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+
+            <Button Content="Выход"
+                    Grid.Column="1"
+                    Margin="15"
+                    Background="#EF4444"
+                    Foreground="White"
+                    BorderThickness="0"
+                    Height="35"
+                    Click="Logout_Click"/>
+        </Grid>
+
+        <!-- Вкладки -->
+        <TabControl Grid.Row="1" Margin="10">
+
+            <!-- Сотрудники -->
+            <TabItem Header="Сотрудники">
+                <Grid Margin="10">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Список -->
+                    <ListBox x:Name="UsersList"
+                             Margin="5"
+                             SelectionChanged="UsersList_SelectionChanged"
+                             Background="Transparent"
+                             BorderThickness="0">
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="White"
+                                        Margin="6"
+                                        Padding="10"
+                                        CornerRadius="8"
+                                        BorderBrush="#E5E7EB"
+                                        BorderThickness="1">
+
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding FullName}" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding Phone}" Foreground="Gray"/>
+                                        <TextBlock Text="{Binding Roles.Name}" Foreground="#2563EB"/>
+                                    </StackPanel>
+
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <!-- Правая панель -->
+                    <Border Grid.Column="1"
+                            Background="White"
+                            Padding="20"
+                            CornerRadius="10"
+                            BorderBrush="#E5E7EB"
+                            BorderThickness="1"
+                            Margin="10">
+
+                        <StackPanel>
+
+                            <TextBlock Text="Управление сотрудником"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Margin="0,0,0,10"/>
+
+                            <TextBlock Text="ФИО"/>
+                            <TextBox x:Name="NewNameBox" Margin="0,5" Height="28"/>
+
+                            <TextBlock Text="Телефон"/>
+                            <TextBox x:Name="NewPhoneBox"
+                                     Margin="0,5"
+                                     Height="28"
+                                     PreviewTextInput="Phone_PreviewTextInput"
+                                     TextChanged="Phone_TextChanged"/>
+
+                            <TextBlock Text="Роль"/>
+                            <ComboBox x:Name="RoleBox" Margin="0,5" Height="28"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,15">
+
+                                <Button Content="Добавить"
+                                        Width="120"
+                                        Height="35"
+                                        Background="#2563EB"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Click="AddUser_Click"/>
+
+                                <Button Content="Уволить"
+                                        Width="120"
+                                        Height="35"
+                                        Margin="10,0,0,0"
+                                        Background="#EF4444"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Click="DeleteUser_Click"/>
+
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Border>
+
+                </Grid>
+            </TabItem>
+
+            <!-- Машины -->
+            <TabItem Header="Машины">
+                <Grid Margin="10">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Добавление -->
+                    <Border Background="White"
+                            Padding="20"
+                            CornerRadius="10"
+                            BorderBrush="#E5E7EB"
+                            BorderThickness="1"
+                            Margin="10">
+
+                        <StackPanel>
+
+                            <TextBlock Text="Добавление авто"
+                                       FontSize="16"
+                                       FontWeight="Bold"
+                                       Margin="0,0,0,10"/>
+
+                            <TextBlock Text="Марка"/>
+                            <TextBox x:Name="BrandBoxCar" Height="28"/>
+
+                            <TextBlock Text="Модель"/>
+                            <TextBox x:Name="ModelBox" Height="28"/>
+
+                            <TextBlock Text="Год"/>
+                            <TextBox x:Name="YearBoxCar" Height="28"/>
+
+                            <TextBlock Text="Цвет"/>
+                            <TextBox x:Name="ColorBoxCar" Height="28"/>
+
+                            <TextBlock Text="Цена"/>
+                            <TextBox x:Name="PriceBox" Height="28"/>
+
+                            <TextBlock Text="Кузов"/>
+                            <ComboBox x:Name="BodyBox" Height="28"/>
+
+                            <Button Content="Выбрать фото"
+                                    Margin="0,10"
+                                    Height="30"
+                                    Background="#2563EB"
+                                    Foreground="White"
+                                    BorderThickness="0"
+                                    Click="SelectPhoto_Click"/>
+
+                            <Button Content="Добавить авто"
+                                    Margin="0,5"
+                                    Height="35"
+                                    Background="#16A34A"
+                                    Foreground="White"
+                                    BorderThickness="0"
+                                    Click="AddCar_Click"/>
+
+                        </StackPanel>
+
+                    </Border>
+
+                    <!-- Витрина -->
+                    <ScrollViewer Grid.Column="1">
+                        <ItemsControl x:Name="CarsAdminList">
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+
+                                    <Border Width="230"
+                                            Margin="10"
+                                            Background="White"
+                                            CornerRadius="10"
+                                            Padding="10"
+                                            BorderBrush="#E5E7EB"
+                                            BorderThickness="1">
+
+                                        <StackPanel>
+
+                                            <Grid Height="110">
+                                                <Border Background="#E5E7EB" CornerRadius="6"/>
+
+                                                <Image Stretch="UniformToFill"
+                                                       Source="{Binding Photo}"/>
+
+                                                <TextBlock Text="Фото нет"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="Gray"
+                                                           Visibility="{Binding Photo, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                            </Grid>
+
+                                            <TextBlock Text="{Binding Manufacturer}" FontWeight="Bold" Margin="0,5,0,0"/>
+                                            <TextBlock Text="{Binding Model}"/>
+                                            <TextBlock Text="{Binding Color}"/>
+                                            <TextBlock Text="{Binding BodyType}"/>
+                                            <TextBlock Text="{Binding Year}"/>
+                                            <TextBlock Text="{Binding Mileage}"/>
+                                            <TextBlock Text="{Binding Price}" Foreground="#16A34A" FontWeight="Bold"/>
+
+                                        </StackPanel>
+
+                                    </Border>
+
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                </Grid>
+            </TabItem>
+
+            <!-- Аналитика -->
+            <TabItem Header="Аналитика">
+                <ScrollViewer>
+                    <StackPanel Margin="20">
+
+                        
+                        <!-- Период -->
+                        <TextBlock Text="Выбор периода"
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Margin="0,0,0,10"/>
+
+                        <StackPanel Orientation="Horizontal"
+                    Margin="0,0,0,20">
+
+                            <TextBlock Text="С:"
+                       VerticalAlignment="Center"
+                       Margin="0,0,5,0"/>
+
+                            <DatePicker x:Name="DateFromPicker"
+                        Width="150"
+                        SelectedDateChanged="AnalyticsDateChanged"/>
+
+                            <TextBlock Text="По:"
+                       VerticalAlignment="Center"
+                       Margin="15,0,5,0"/>
+
+                            <DatePicker x:Name="DateToPicker"
+                        Width="150"
+                        SelectedDateChanged="AnalyticsDateChanged"/>
+
+                        </StackPanel>
+
+                        <!-- Общая статистика -->
+                        <TextBlock Text="Статистика"
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Margin="0,0,0,10"/>
+
+                        <WrapPanel>
+
+                            <Border Background="White"
+                    Padding="12"
+                    Margin="5"
+                    CornerRadius="8"
+                    Width="180">
+
+                                <StackPanel>
+                                    <TextBlock Text="Автопарк"/>
+                                    <TextBlock x:Name="TotalCarsText"
+                               FontWeight="Bold"
+                               FontSize="16"/>
+                                </StackPanel>
+
+                            </Border>
+
+                            <Border Background="White"
+                    Padding="12"
+                    Margin="5"
+                    CornerRadius="8"
+                    Width="180">
+
+                                <StackPanel>
+                                    <TextBlock Text="Продано"/>
+                                    <TextBlock x:Name="SoldCarsText"
+                               FontWeight="Bold"
+                               FontSize="16"/>
+                                </StackPanel>
+
+                            </Border>
+
+                            <Border Background="White"
+                    Padding="12"
+                    Margin="5"
+                    CornerRadius="8"
+                    Width="180">
+
+                                <StackPanel>
+                                    <TextBlock Text="Доступно"/>
+                                    <TextBlock x:Name="AvailableCarsText"
+                               FontWeight="Bold"
+                               FontSize="16"/>
+                                </StackPanel>
+
+                            </Border>
+
+                            <Border Background="White"
+                    Padding="12"
+                    Margin="5"
+                    CornerRadius="8"
+                    Width="180">
+
+                                <StackPanel>
+                                    <TextBlock Text="В работе"/>
+                                    <TextBlock x:Name="RequestsText"
+                               FontWeight="Bold"
+                               FontSize="16"/>
+                                </StackPanel>
+
+                            </Border>
+
+                        </WrapPanel>
+
+                        <!-- Выручка -->
+                        <TextBlock Text="Выручка"
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Margin="0,20,0,10"/>
+
+                        <Border Background="White"
+                Padding="15"
+                CornerRadius="10">
+
+                            <StackPanel>
+
+                                <TextBlock Text="Общая выручка за период"
+                           Foreground="Gray"/>
+
+                                <TextBlock x:Name="RevenueText"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="#16A34A"/>
+
+                            </StackPanel>
+
+                        </Border>
+
+                        <!-- Топ марок -->
+                        <TextBlock Text="Самые популярные марки"
+                   FontSize="18"
+                   FontWeight="Bold"
+                   Margin="0,20,0,10"/>
+
+                        <Border Background="White"
+                CornerRadius="10"
+                Padding="10">
+
+                            <ListBox x:Name="TopBrandsList"
+                     BorderThickness="0"
+                     Background="Transparent">
+
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}"
+                                   FontSize="15"
+                                   Margin="5"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+
+                            </ListBox>
+
+                        </Border>
+
+                    </StackPanel>
+                </ScrollViewer>
+                
+
+            </TabItem>
+
+
+        </TabControl>
+
+    </Grid>
+</Window>

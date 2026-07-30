@@ -176,10 +176,13 @@ namespace CarDealer
 
             doc.Close();
 
-            // Договор подписан — машина уходит с витрины, заявка закрывается
+            // Договор подписан — машина уходит с витрины, заявка закрывается.
+            // FinalPrice фиксирует сумму сделки для отчёта по выручке.
             currentCar.StatusId = 3;
 
-            db.CustomerRequests.Remove(currentRequest);
+            currentRequest.Status = "Завершена";
+            currentRequest.FinalPrice = currentPrice;
+
             db.SaveChanges();
 
             MessageBox.Show($"Кредит оформлен!\nДокумент сохранён:\n{path}");

@@ -62,9 +62,13 @@ namespace CarDealer
 
             RequestsText.Text = requests.Count.ToString();
 
-            SoldCarsText.Text = requests.Count.ToString();
+            // Продажи и выручка — только по закрытым сделкам,
+            // заявка в работе выручкой ещё не является.
+            var completed = requests.Where(x => x.Status == "Завершена").ToList();
 
-            decimal revenue = requests.Sum(x => x.FinalPrice ?? 0);
+            SoldCarsText.Text = completed.Count.ToString();
+
+            decimal revenue = completed.Sum(x => x.FinalPrice ?? 0);
 
             RevenueText.Text = revenue.ToString("N0") + " ₽";
 

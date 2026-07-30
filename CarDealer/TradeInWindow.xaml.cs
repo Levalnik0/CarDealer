@@ -80,17 +80,23 @@ namespace CarDealer
                 "Завершение Trade-In",
                 MessageBoxButton.YesNoCancel);
 
-            // Принятая машина попадает в каталог в любом случае
-            AddUsedCar(oldPrice);
+            if (result == MessageBoxResult.Cancel)
+                return;
 
             if (result == MessageBoxResult.Yes)
             {
-                CreateTradeDkp(oldPrice, final);
-                CompleteSale();
+                // Пока договор не сохранён, машину в зачёт не принимаем
+                if (!CreateTradeDkp(oldPrice, final))
+                    return;
+
+                AddUsedCar(oldPrice);
+                CompleteSale(final);
             }
 
             else if (result == MessageBoxResult.No)
             {
+                AddUsedCar(oldPrice);
+
                 currentRequest.FinalPrice = final;
                 currentRequest.Status = "Кредит";
 
@@ -121,12 +127,13 @@ namespace CarDealer
             db.Cars.Add(usedCar);
         }
 
-        void CreateTradeDkp(decimal oldPrice, decimal final)
+        // Возвращает false, если пользователь закрыл диалог сохранения
+        bool CreateTradeDkp(decimal oldPrice, decimal final)
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "PDF (*.pdf)|*.pdf";
 
-            if (dialog.ShowDialog() != true) return;
+            if (dialog.ShowDialog() != true) return false;
 
             string path = dialog.FileName;
 
@@ -161,13 +168,16 @@ namespace CarDealer
             doc.Close();
 
             MessageBox.Show("ДКП сохранён");
+
+            return true;
         }
 
-        void CompleteSale()
+        void CompleteSale(decimal finalPrice)
         {
             newCar.StatusId = 3; // продана
 
-            db.CustomerRequests.Remove(currentRequest);
+            currentRequest.Status = "Завершена";
+            currentRequest.FinalPrice = finalPrice;
 
             db.SaveChanges();
 

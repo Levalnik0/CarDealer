@@ -23,11 +23,13 @@ namespace CarDealer
             LoadRequests();
         }
 
-        // Заявки, ушедшие в кредит или trade-in, ведут другие сотрудники
+        // В очередь консультанта попадают только свежие брони: заявки,
+        // ушедшие в кредит или trade-in, ведут другие сотрудники, а закрытые
+        // остаются в базе ради истории продаж.
         void LoadRequests()
         {
             RequestsList.ItemsSource = db.CustomerRequests
-                .Where(r => r.Status != "Кредит" && r.Status != "TradeIn")
+                .Where(r => r.Status == "Забронирован")
                 .ToList();
         }
 
@@ -68,7 +70,7 @@ namespace CarDealer
 
                 car.StatusId = 1;
 
-                db.CustomerRequests.Remove(currentRequest);
+                currentRequest.Status = "Отказ";
                 db.SaveChanges();
 
                 ClearUI();
@@ -91,7 +93,11 @@ namespace CarDealer
 
                     currentCar.StatusId = 3; // продана
 
-                    db.CustomerRequests.Remove(currentRequest);
+                    // Заявка не удаляется, а закрывается: сумма сделки нужна
+                    // администратору для отчёта по выручке.
+                    currentRequest.Status = "Завершена";
+                    currentRequest.FinalPrice = currentCar.Price;
+
                     db.SaveChanges();
 
                     MessageBox.Show("Сделка завершена");
